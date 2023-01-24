@@ -93,7 +93,8 @@ const Home: NextPage = ({
 	);
 };
 
-// This gets called on every request
+// We want the rainfallData to be fetched at request time so we use getServerSideProps.
+// If the data is not needed at request time then we could use the api folder to fetch data instead
 export const getServerSideProps: GetServerSideProps = async () => {
 	return { props: { rainfallData } };
 };

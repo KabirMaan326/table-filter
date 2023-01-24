@@ -3,6 +3,7 @@ import {
 	InferGetServerSidePropsType,
 	type NextPage,
 } from "next";
+import Head from "next/head";
 import { useMemo } from "react";
 import { rainfallData } from "../utils/data";
 import { getTableDataFromRainfall } from "../utils/dataTransformation";
@@ -20,9 +21,27 @@ const Home: NextPage = ({
 	);
 	console.log({ tableData, columns });
 	return (
-		<div>
-			<h1>Home</h1>
-		</div>
+		<>
+			<Head>
+				<title>Cervest Test</title>
+				<meta name="description" content="Cervest Test" />
+			</Head>
+			<div className="min-h-screen bg-gray-100 text-gray-900 grid place-items-center">
+				<main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+					<div className="">
+						<h1 className="text-xl font-semibold">Cervest Task</h1>
+					</div>
+					<div>
+						<div>
+							<div className="grid gap-4 grid-cols-1 sm:grid-cols-3 my-2 w-full">
+								Statistis
+							</div>
+						</div>
+					</div>
+					<div className="mt-4">Table</div>
+				</main>
+			</div>
+		</>
 	);
 };
 

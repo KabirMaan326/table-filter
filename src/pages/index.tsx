@@ -5,6 +5,7 @@ import {
 } from "next";
 import Head from "next/head";
 import { useMemo } from "react";
+import CustomTable from "../components/CustomTable";
 import { rainfallData } from "../utils/data";
 import { getTableDataFromRainfall } from "../utils/dataTransformation";
 
@@ -38,7 +39,9 @@ const Home: NextPage = ({
 							</div>
 						</div>
 					</div>
-					<div className="mt-4">Table</div>
+					<div className="mt-4">
+						<CustomTable data={tableData} columns={columns} />
+					</div>
 				</main>
 			</div>
 		</>

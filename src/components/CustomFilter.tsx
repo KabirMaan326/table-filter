@@ -6,16 +6,18 @@ import { ChevronUpDownIcon, EyeSlashIcon } from "@heroicons/react/20/solid";
 // We memoize this component at the bottom of the page
 // This reduces the amount of unneccesary renders by checking if props are equal
 // From my checks this reduces the amount of renders from 4 to 2 when filter selection is changed
-const CustomFilter = ({
-	column,
-	customFilterValues,
-	customFilterOptions,
-}: {
+
+type CustomFilterProps = {
 	column: Column<any, unknown>;
 	table: Table<any>;
 	customFilterValues: string[];
 	customFilterOptions: ReactNode[];
-}) => {
+};
+const CustomFilter = ({
+	column,
+	customFilterValues,
+	customFilterOptions,
+}: CustomFilterProps) => {
 	const classNames = (...classes: string[]) => {
 		return classes.filter(Boolean).join(" ");
 	};

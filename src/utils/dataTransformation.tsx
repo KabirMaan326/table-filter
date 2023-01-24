@@ -84,3 +84,26 @@ export function getTableDataFromRainfall(data: RainfallData[]): TranformProps {
 
 	return { tableData, columns };
 }
+
+
+export const getAggregateRainfall = (data: TransformedDataType[]) => {
+	let totalRainfall = 0;
+	let numOfDays = 0;
+	const daysAbove10ml = new Set(); // We want unique values where days are above 10ml of rainfall
+
+	data.forEach((region) => {
+		region.rainfallData.forEach((value, key) => {
+			totalRainfall += value;
+			numOfDays++;
+			if (value > 10) {
+				daysAbove10ml.add(key);
+			}
+		});
+	});
+
+	return {
+		totalRainfall,
+		averageRainfall: totalRainfall / numOfDays,
+		daysAbove10ml: daysAbove10ml.size,
+	};
+};

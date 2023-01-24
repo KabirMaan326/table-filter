@@ -21,6 +21,8 @@ export const rainfallData: RainfallData[] = [
 				regionName: "Norway",
 				value: 3,
 			},
+			{ regionName: "Japan", value: 1 },
+			{ regionName: "Australia", value: 0 },
 		],
 	},
 	{
@@ -38,6 +40,8 @@ export const rainfallData: RainfallData[] = [
 				regionName: "Norway",
 				value: 9,
 			},
+			{ regionName: "Japan", value: 2 },
+			{ regionName: "Australia", value: 1 },
 		],
 	},
 	{
@@ -55,6 +59,8 @@ export const rainfallData: RainfallData[] = [
 				regionName: "Norway",
 				value: 17,
 			},
+			{ regionName: "Japan", value: 11 },
+			{ regionName: "Australia", value: 4 },
 		],
 	},
 	{
@@ -62,16 +68,18 @@ export const rainfallData: RainfallData[] = [
 		data: [
 			{
 				regionName: "France",
-				value: 21,
+				value: 41,
 			},
 			{
 				regionName: "Spain",
-				value: 16,
+				value: 10,
 			},
 			{
 				regionName: "Norway",
-				value: 17,
+				value: 7,
 			},
+			{ regionName: "Japan", value: 11 },
+			{ regionName: "Australia", value: 20 },
 		],
 	},
 	{
@@ -79,7 +87,7 @@ export const rainfallData: RainfallData[] = [
 		data: [
 			{
 				regionName: "France",
-				value: 21,
+				value: 11,
 			},
 			{
 				regionName: "Spain",
@@ -87,8 +95,48 @@ export const rainfallData: RainfallData[] = [
 			},
 			{
 				regionName: "Norway",
+				value: 37,
+			},
+			{ regionName: "Japan", value: 12 },
+			{ regionName: "Australia", value: 4 },
+		],
+	},
+	{
+		date: "2023-01-15T21:15:00.000Z",
+		data: [
+			{
+				regionName: "France",
+				value: 13,
+			},
+			{
+				regionName: "Spain",
+				value: 6,
+			},
+			{
+				regionName: "Norway",
 				value: 17,
 			},
+			{ regionName: "Japan", value: 5 },
+			{ regionName: "Australia", value: 6 },
+		],
+	},
+	{
+		date: "2023-01-16T21:15:00.000Z",
+		data: [
+			{
+				regionName: "France",
+				value: 73,
+			},
+			{
+				regionName: "Spain",
+				value: 16,
+			},
+			{
+				regionName: "Norway",
+				value: 48,
+			},
+			{ regionName: "Japan", value: 15 },
+			{ regionName: "Australia", value: 16 },
 		],
 	},
 ];

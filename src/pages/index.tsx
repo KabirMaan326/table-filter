@@ -1,10 +1,11 @@
+import { ColumnFiltersState } from "@tanstack/react-table";
 import {
 	GetServerSideProps,
 	InferGetServerSidePropsType,
 	type NextPage,
 } from "next";
 import Head from "next/head";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import CustomTable from "../components/CustomTable";
 import { rainfallData } from "../utils/data";
 import { getTableDataFromRainfall } from "../utils/dataTransformation";
@@ -12,6 +13,7 @@ import { getTableDataFromRainfall } from "../utils/dataTransformation";
 const Home: NextPage = ({
 	rainfallData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 	// We memoize this value so it only calculates if the rainfallData changes
 	// In this case as data is returned on each request by getServerSideProps it
 	// is not necessary to use this but if we were to request the data again
@@ -20,7 +22,7 @@ const Home: NextPage = ({
 		() => getTableDataFromRainfall(rainfallData),
 		[rainfallData]
 	);
-	console.log({ tableData, columns });
+
 	return (
 		<>
 			<Head>
@@ -40,7 +42,12 @@ const Home: NextPage = ({
 						</div>
 					</div>
 					<div className="mt-4">
-						<CustomTable data={tableData} columns={columns} />
+						<CustomTable
+							data={tableData}
+							columns={columns}
+							columnFilters={columnFilters}
+							setColumnFilters={setColumnFilters}
+						/>
 					</div>
 				</main>
 			</div>

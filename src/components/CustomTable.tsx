@@ -5,7 +5,10 @@ import {
 	ColumnDef,
 	getCoreRowModel,
 	getFilteredRowModel,
+	ColumnFiltersState,
 } from "@tanstack/react-table";
+import { ReactNode, useMemo } from "react";
+import CustomFilter from "./CustomFilter";
 
 interface CustomFilterMeta extends FilterMeta {
 	customFilter: boolean;
@@ -14,6 +17,8 @@ interface CustomFilterMeta extends FilterMeta {
 type CustomTableProps<T> = {
 	data: T[];
 	columns: ColumnDef<T>[];
+	columnFilters: ColumnFiltersState;
+	setColumnFilters: React.Dispatch<React.SetStateAction<ColumnFiltersState>>;
 };
 
 // This component creates the custom table
@@ -24,14 +29,27 @@ type CustomTableProps<T> = {
 const CustomTable = <T extends unknown>({
 	data,
 	columns,
+	columnFilters,
+	setColumnFilters,
 }: CustomTableProps<T>) => {
 	const table = useReactTable({
 		data,
 		columns,
-
+		state: {
+			columnFilters,
+		},
+		onColumnFiltersChange: setColumnFilters,
 		getCoreRowModel: getCoreRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 	});
+
+	const customFilterOptions = useMemo(
+		() =>
+			table.getCoreRowModel().rows.map((row) => {
+				return row.getVisibleCells()[0]?.getValue();
+			}) as ReactNode[],
+		[]
+	);
 
 	return (
 		<div className="mt-2 flex flex-col ">
@@ -43,6 +61,7 @@ const CustomTable = <T extends unknown>({
 								{table.getHeaderGroups().map((headerGroup) => (
 									<tr key={headerGroup.id}>
 										{headerGroup.headers.map((header) => {
+											console.log({ header });
 											return (
 												<th
 													key={header.id}
@@ -76,9 +95,20 @@ const CustomTable = <T extends unknown>({
 																				?.meta as CustomFilterMeta
 																		)
 																			.customFilter && (
-																			<div>
-																				CustomFilter
-																			</div>
+																			<CustomFilter
+																				column={
+																					header.column
+																				}
+																				table={
+																					table
+																				}
+																				customFilterValues={
+																					header.column.getFilterValue() as string[]
+																				}
+																				customFilterOptions={
+																					customFilterOptions
+																				}
+																			/>
 																		)}
 																</div>
 															) : null}
@@ -97,6 +127,7 @@ const CustomTable = <T extends unknown>({
 											{row
 												.getVisibleCells()
 												.map((cell) => {
+													console.log({ cell });
 													return (
 														<td
 															key={cell.id}

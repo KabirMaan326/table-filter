@@ -61,7 +61,6 @@ const CustomTable = <T extends unknown>({
 								{table.getHeaderGroups().map((headerGroup) => (
 									<tr key={headerGroup.id}>
 										{headerGroup.headers.map((header) => {
-											console.log({ header });
 											return (
 												<th
 													key={header.id}
@@ -127,7 +126,6 @@ const CustomTable = <T extends unknown>({
 											{row
 												.getVisibleCells()
 												.map((cell) => {
-													console.log({ cell });
 													return (
 														<td
 															key={cell.id}

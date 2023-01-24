@@ -7,8 +7,12 @@ import {
 import Head from "next/head";
 import { useMemo, useState } from "react";
 import CustomTable from "../components/CustomTable";
+import Statistic from "../components/Statistic";
 import { rainfallData } from "../utils/data";
-import { getTableDataFromRainfall } from "../utils/dataTransformation";
+import {
+	getAggregateRainfall,
+	getTableDataFromRainfall,
+} from "../utils/dataTransformation";
 
 const Home: NextPage = ({
 	rainfallData,
@@ -23,6 +27,23 @@ const Home: NextPage = ({
 		[rainfallData]
 	);
 
+	// We memoize filteredData so it only recalculates if the columnFilters change
+	const filteredData = useMemo(() => {
+		let filteredData = tableData;
+		const columnFilterValues = columnFilters[0]?.value as string[];
+		if (columnFilterValues) {
+			filteredData = tableData.filter((item) => {
+				return !columnFilterValues.includes(item.regionName);
+			});
+		}
+		return filteredData;
+	}, [columnFilters]);
+
+	// We memoize the return value here so it only recalculates if filteredData changes
+	const { totalRainfall, averageRainfall, daysAbove10ml } = useMemo(
+		() => getAggregateRainfall(filteredData),
+		[filteredData]
+	);
 	return (
 		<>
 			<Head>
@@ -37,7 +58,24 @@ const Home: NextPage = ({
 					<div>
 						<div>
 							<div className="grid gap-4 grid-cols-1 sm:grid-cols-3 my-2 w-full">
-								Statistis
+								<Statistic
+									title={"Total Rainfall (mm)"}
+									value={totalRainfall}
+								/>
+								<Statistic
+									title={"Average Rainfall (mm)"}
+									value={
+										isNaN(averageRainfall)
+											? 0
+											: parseFloat(
+													averageRainfall.toFixed(2)
+											  )
+									}
+								/>
+								<Statistic
+									title={"Days where rainfall above 10m"}
+									value={daysAbove10ml}
+								/>
 							</div>
 						</div>
 					</div>

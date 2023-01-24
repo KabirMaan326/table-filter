@@ -15,7 +15,7 @@ export type TranformProps = {
 
 const columnHelper = createColumnHelper<TransformedDataType>();
 
-export function getTableDataFromRainfall(data: RainfallData[]): TranformProps {
+const extractDatesAndRegionData = (data: RainfallData[]) => {
 	const regionData = new Map(); // We use a set so we can easily update region data but still iterate over values
 	const dates = new Set<string>(); // We want unique values for dates so we use a Set
 	data.forEach((item) => {
@@ -33,13 +33,10 @@ export function getTableDataFromRainfall(data: RainfallData[]): TranformProps {
 			}
 		});
 	});
+	return { regionData, dates };
+};
 
-	// Create an array from regionData with correct format for table
-	const tableData = Array.from(regionData, ([name, value]) => ({
-		regionName: name,
-		rainfallData: value,
-	}));
-
+const getColumnsFromData = (dates: Set<string>) => {
 	// We create columns for the table here, we initialise an array with the first column being regionName,
 	// We then iterate over the dates to add the rest of the columns
 	const nestedColumns: ColumnDef<TransformedDataType, any>[] = [
@@ -82,9 +79,20 @@ export function getTableDataFromRainfall(data: RainfallData[]): TranformProps {
 		}),
 	];
 
+	return columns;
+};
+
+export function getTableDataFromRainfall(data: RainfallData[]): TranformProps {
+	const { regionData, dates } = extractDatesAndRegionData(data);
+	const columns = getColumnsFromData(dates);
+	// Create an array from regionData with correct format for table
+	const tableData = Array.from(regionData, ([name, value]) => ({
+		regionName: name,
+		rainfallData: value,
+	}));
+
 	return { tableData, columns };
 }
-
 
 export const getAggregateRainfall = (data: TransformedDataType[]) => {
 	let totalRainfall = 0;

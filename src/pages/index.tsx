@@ -11,6 +11,7 @@ import Statistic from "../components/Statistic";
 import { rainfallData } from "../utils/data";
 import {
 	getAggregateRainfall,
+	TransformedDataType,
 	getTableDataFromRainfall,
 } from "../utils/dataTransformation";
 
@@ -18,6 +19,7 @@ const Home: NextPage = ({
 	rainfallData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
 	// We memoize this value so it only calculates if the rainfallData changes
 	// In this case as data is returned on each request by getServerSideProps it
 	// is not necessary to use this but if we were to request the data again
@@ -44,6 +46,7 @@ const Home: NextPage = ({
 		() => getAggregateRainfall(filteredData),
 		[filteredData]
 	);
+
 	return (
 		<>
 			<Head>
@@ -80,7 +83,7 @@ const Home: NextPage = ({
 						</div>
 					</div>
 					<div className="mt-4">
-						<CustomTable
+						<CustomTable<TransformedDataType>
 							data={tableData}
 							columns={columns}
 							columnFilters={columnFilters}
@@ -98,5 +101,4 @@ const Home: NextPage = ({
 export const getServerSideProps: GetServerSideProps = async () => {
 	return { props: { rainfallData } };
 };
-
 export default Home;

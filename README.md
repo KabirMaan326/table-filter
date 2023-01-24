@@ -1,5 +1,7 @@
 # Table with filters
 
+Preview URL - https://table-filter-two.vercel.app/
+
 I followed the orginal task but made some adjustments as follows
 
 -   I used TypeScript instead of JavaScript

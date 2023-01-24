@@ -76,7 +76,7 @@ const Home: NextPage = ({
 									}
 								/>
 								<Statistic
-									title={"Days where rainfall above 10m"}
+									title={"No. of days rainfall above 10mm"}
 									value={daysAbove10ml}
 								/>
 							</div>
@@ -98,7 +98,7 @@ const Home: NextPage = ({
 
 // We want the rainfallData to be fetched at request time so we use getServerSideProps.
 // If the data is not needed at request time then we could use the api folder to fetch data instead
-// We could also do the data transformation here instead of the client but in the interest of this being a 
+// We could also do the data transformation here instead of the client but in the interest of this being a
 // front end test I chose to do as much as I could on the client side
 export const getServerSideProps: GetServerSideProps = async () => {
 	return { props: { rainfallData } };
